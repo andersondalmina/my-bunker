@@ -1,0 +1,12 @@
+---
+interface Props {
+    href: string;
+    [key: string]: any;
+}
+
+const { href, ...props } = Astro.props;
+---
+
+<a href={href} {...props}>
+    <slot />
+</a>
