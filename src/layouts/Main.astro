@@ -1,0 +1,23 @@
+---
+import "../styles/global.css";
+
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en" class="dark overscroll-none">
+    <Head title={title} description={description} />
+
+    <body
+        class="bg-neutral-100 pb-10 font-mono antialiased dark:bg-neutral-900"
+    >
+        <Header />
+        <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-3xl">
+                <slot />
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "../layouts/Main.astro";
+import { format } from "date-fns";
+
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+    <article
+        class="mt-20 flex min-w-0 flex-auto flex-col px-2 text-pretty md:px-0"
+    >
+        <header class="mb-10">
+            <h1 class="mb-2 text-4xl font-bold dark:text-white">
+                {post.data.title}
+            </h1>
+            <time class="text-sm text-neutral-600 dark:text-neutral-400">
+                {format(post.data.pubDate, "dd LLL, yyyy")}
+            </time>
+        </header>
+
+        <div
+            class="prose dark:prose-invert max-w-none text-pretty wrap-anywhere md:wrap-normal"
+        >
+            <slot />
+        </div>
+    </article>
+</Layout>

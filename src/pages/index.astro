@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import { format } from "date-fns";
+import Layout from "../layouts/Main.astro";
+
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
+const posts = (await getCollection("blog"))
+    .filter((post) => post.data.published)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+    <main class="mt-20 flex min-w-0 flex-auto flex-col px-2 md:px-0">
+        <h1 class="mb-10 text-4xl font-bold dark:text-white">
+            Hi, I'm Anderson.
+        </h1>
+        <p class="text-neutral-600 dark:text-neutral-100">
+            I'm passionate about Software Architecture, Design Patterns, Machine
+            Learning and Neural Networks, Ruby, Golang and Games.
+        </p>
+
+        <div class="my-20">
+            <h2 class="mb-8 text-xl font-bold text-black dark:text-white">
+                Posts
+            </h2>
+            <div class="space-y-10">
+                {
+                    posts.map((post) => (
+                        <a
+                            class="group flex flex-col space-y-1"
+                            href={`/blog/${post.id}`}
+                        >
+                            <div class="flex w-full flex-col space-x-0 md:flex-row md:space-x-2">
+                                <p class="w-[100px] text-sm text-neutral-500 tabular-nums dark:text-neutral-400">
+                                    {format(post.data.pubDate, "dd LLL, yyyy")}
+                                </p>
+                                <p class="text-lg tracking-tight underline-offset-4 group-hover:underline dark:text-neutral-100">
+                                    {post.data.title}
+                                </p>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </main>
+</Layout>
